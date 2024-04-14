@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "82829353401",
+    "firebase_url": "https://excelsync-8d4a2-default-rtdb.firebaseio.com",
+    "project_id": "excelsync-8d4a2",
+    "storage_bucket": "excelsync-8d4a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82829353401:android:da8a7abf12dfb901011668",
+        "android_client_info": {
+          "package_name": "com.example.cockpitintelligence"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcOYJBjZSMQKth3-xgR10fS_syNZJ8wlw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
