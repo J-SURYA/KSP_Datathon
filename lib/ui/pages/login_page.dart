@@ -1,8 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cockpitintelligence/userhomepage.dart';
 import 'package:cockpitintelligence/ui/controllers/auth_service.dart';
 import 'package:telephony/telephony.dart';
+
+String? userName = null;
+String? userEmail = null;
+String? userVehicle = null;
+String? userPhone = null;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key});
@@ -50,12 +57,13 @@ class _LoginPageState extends State<LoginPage>
   }
 
   // handle after otp is submitted
-  void handleSubmit(BuildContext context) {
+  void handleSubmit(BuildContext context) async {
     if (_formKey1.currentState!.validate()) {
       AuthService.loginWithOtp(otp: _otpController.text).then((value) {
         if (value == "Success") {
           // Store user details in Firestore
           storeUserDetails();
+          fetchUserDetails(_vehicleController as String);
           Navigator.pop(context);
           Navigator.pushReplacement(
             context,
@@ -74,6 +82,32 @@ class _LoginPageState extends State<LoginPage>
           );
         }
       });
+    }
+  }
+
+  Future<void> fetchUserDetails(String vehicleNumber) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(vehicleNumber)
+              .get();
+
+      if (documentSnapshot.exists) {
+        userName = documentSnapshot.get('name');
+        userEmail = documentSnapshot.get('email');
+        userVehicle = documentSnapshot.get('Vehicle Number');
+        userPhone = documentSnapshot.get('phone');
+
+        print('Name: $userName');
+        print('Email: $userEmail');
+        print('Police Register Number: $userVehicle');
+        print('Phone: $userPhone');
+      } else {
+        print('Document with vehicle number $vehicleNumber does not exist');
+      }
+    } catch (error) {
+      print('Failed to fetch user details: $error');
     }
   }
 
